@@ -1,5 +1,5 @@
 
-import {c, o, Controller, bind, cls, ctrl, click} from 'carbyne';
+import {h, o, Controller, bind, cls, ctrl, click} from 'carbyne';
 
 import {V, velocity} from 'carbyne-velocity';
 import {Button} from './button';
@@ -38,9 +38,9 @@ export var dialogOverlayAnimation = velocity({
 })
 
 
-export var Overlay = (attrs, children) => <div class='carbm-dialog-overlay'>{children}</div>
-export var Title = (attrs, children) => <h3 class='carbm-dialog-title'>{children}</h3>
-export var Content = (attrs, children) => <div class='carbm-dialog-content'>{children}</div>
+export var Overlay = (attrs, children) => h('.carbm-dialog-overlay', {}, children)
+export var Title = (attrs, children) => h('h3.carbm-dialog-title', {}, children)
+export var Content = (attrs, children) => h('.carbm-dialog-content', {}, children)
 
 // FIXME this node should watch the width of its children to be able
 // to switch to the vertical presentation for dialog buttons.

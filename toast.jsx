@@ -1,5 +1,5 @@
 
-import {c, o, click} from 'carbyne';
+import {h, o, click} from 'carbyne';
 
 // import V from 'velocity-animate';
 
@@ -11,7 +11,7 @@ class Toaster {
 
 	constructor() {
 		this._mounted = false;
-		this._holder = <div class='carbm--toast-holder'/>;
+		this._holder = h('.carbm--toast-holder')
 	}
 
 	mount(elt, before) {
@@ -27,21 +27,25 @@ class Toaster {
 			clearTimeout(this._cancel);
 		}
 
-		(this._current ? 
+		(this._current ?
 			this._current.destroy() :
 			Promise.resolve(true)
 		).then(done => {
 			let cancel = null;
-			let atom = <div class='carbm--toast' $$={[click(ev => {
-					atom.destroy();
-					clearTimeout(cancel);
-					if (atom === this._current) this._current = null;
-				}),
-				velocity({
-					enter: {opacity: [1, 0], translateY: [0, '100%']},
-					leave: {opacity: 0, translateY: '100%'}
-				})
-			]}>{msg}</div>;
+			let atom = h('.carbm--toast', {
+				$$: [
+					click(ev => {
+						atom.destroy();
+						clearTimeout(cancel);
+						if (atom === this._current) this._current = null;
+					}),
+					velocity({
+						enter: {opacity: [1, 0], translateY: [0, '100%']},
+						leave: {opacity: 0, translateY: '100%'}
+					})
+				]
+			}, msg)
+
 			this._holder.append(atom);
 			this._current = atom;
 			this._cancel = cancel = setTimeout(() => {
